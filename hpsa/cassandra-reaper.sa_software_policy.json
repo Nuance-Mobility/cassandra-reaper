@@ -1,0 +1,32 @@
+{
+    "path":"/Nuance/Shared/Software Policies/Cassandra Reaper/Policies",
+    "name":"cassandra-reaper-<release.number>.<build.number>",
+    "description":"Cassandra Reaper",
+    "softwarePolicyItems": [
+        {
+            "path":"/Nuance/Shared/Software Policies/Oracle JDK/Policies",
+            "name":"jdk-7u65",
+            "type": "software_policy"
+        },
+        {
+            "path":"/Nuance/Shared/Software Policies/Cassandra Reaper/Packages",
+            "name":"cassandra-reaper",
+            "type":"software_unit",
+            "remediateMode":"ALWAYS"
+        }
+    ],
+    "platforms": [
+        {
+            "platforms.name":"Red Hat Enterprise Linux Workstation 6 X86_64"
+        },
+        {
+            "platforms.name":"Red Hat Enterprise Linux Server 6 X86_64"
+        },
+        {
+            "platforms.name":"Oracle Linux 6 X86_64"
+        },
+        {
+            "platforms.name":"CentOS 6 X86_64"
+        }
+    ]
+}
