@@ -1,7 +1,7 @@
 {
     "path":"/Nuance/Shared/Software Policies/Cassandra Reaper/Packages",
     "name":"cassandra-reaper-<release.number>.<build.number>",
-    "fileName":"cassandra-reaper.zip",
+    "fileName":"cassandra-reaper-<release.number>.<build.number>.zip",
     "description":"Cassandra Reaper",
     "unitType":"ZIP",
     "upgradable":true,
