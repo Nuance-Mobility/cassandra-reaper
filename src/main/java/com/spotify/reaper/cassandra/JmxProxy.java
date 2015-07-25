@@ -77,6 +77,9 @@ public class JmxProxy implements NotificationListener, AutoCloseable {
   private final JMXServiceURL jmxUrl;
   private final String clusterName;
 
+  private static final boolean FULL_REPAIR = true;
+
+
   private JmxProxy(Optional<RepairStatusHandler> handler, String host, JMXServiceURL jmxUrl,
       JMXConnector jmxConnector, StorageServiceMBean ssProxy, ObjectName ssMbeanName,
       MBeanServerConnection mbeanServer, CompactionManagerMBean cmProxy) {
@@ -349,7 +352,7 @@ public class JmxProxy implements NotificationListener, AutoCloseable {
     if (repairParallelism.equals(RepairParallelism.DATACENTER_AWARE)) {
       if (canUseDatacenterAware) {
         return ssProxy.forceRepairRangeAsync(beginToken.toString(), endToken.toString(), keyspace,
-            repairParallelism.ordinal(), null, null,
+            repairParallelism.ordinal(), null, null, FULL_REPAIR,
             columnFamilies
                 .toArray(new String[columnFamilies.size()]));
       } else {
@@ -361,7 +364,7 @@ public class JmxProxy implements NotificationListener, AutoCloseable {
     }
     boolean snapshotRepair = repairParallelism.equals(RepairParallelism.SEQUENTIAL);
     return ssProxy.forceRepairRangeAsync(beginToken.toString(), endToken.toString(), keyspace,
-        snapshotRepair, false,
+        snapshotRepair, false, FULL_REPAIR,
         columnFamilies.toArray(new String[columnFamilies.size()]));
   }
 
