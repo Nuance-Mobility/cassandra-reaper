@@ -76,9 +76,12 @@ public class JmxProxy implements NotificationListener, AutoCloseable {
   private final String host;
   private final JMXServiceURL jmxUrl;
   private final String clusterName;
+<<<<<<< HEAD
 
   private static final boolean FULL_REPAIR = true;
 
+=======
+>>>>>>> b8bd32c... Revert "ND-1410 updating the reaper code to use cassadnra 2.1.8 library"
 
   private JmxProxy(Optional<RepairStatusHandler> handler, String host, JMXServiceURL jmxUrl,
       JMXConnector jmxConnector, StorageServiceMBean ssProxy, ObjectName ssMbeanName,
@@ -352,9 +355,15 @@ public class JmxProxy implements NotificationListener, AutoCloseable {
     if (repairParallelism.equals(RepairParallelism.DATACENTER_AWARE)) {
       if (canUseDatacenterAware) {
         return ssProxy.forceRepairRangeAsync(beginToken.toString(), endToken.toString(), keyspace,
+<<<<<<< HEAD
             repairParallelism.ordinal(), null, null, FULL_REPAIR,
             columnFamilies
                 .toArray(new String[columnFamilies.size()]));
+=======
+                                             repairParallelism.ordinal(), null, null,
+                                             columnFamilies
+                                                 .toArray(new String[columnFamilies.size()]));
+>>>>>>> b8bd32c... Revert "ND-1410 updating the reaper code to use cassadnra 2.1.8 library"
       } else {
         LOG.info("Cannot use DATACENTER_AWARE repair policy for Cassandra cluster with version {},"
                  + " falling back to SEQUENTIAL repair.",
@@ -364,8 +373,13 @@ public class JmxProxy implements NotificationListener, AutoCloseable {
     }
     boolean snapshotRepair = repairParallelism.equals(RepairParallelism.SEQUENTIAL);
     return ssProxy.forceRepairRangeAsync(beginToken.toString(), endToken.toString(), keyspace,
+<<<<<<< HEAD
         snapshotRepair, false, FULL_REPAIR,
         columnFamilies.toArray(new String[columnFamilies.size()]));
+=======
+                                         snapshotRepair, false,
+                                         columnFamilies.toArray(new String[columnFamilies.size()]));
+>>>>>>> b8bd32c... Revert "ND-1410 updating the reaper code to use cassadnra 2.1.8 library"
   }
 
   /**
