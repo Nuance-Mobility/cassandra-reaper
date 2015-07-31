@@ -32,12 +32,12 @@ fi
 
 databaseUrl="`get_cust_attr databaseUrl`"
 if [ ! -z "$databaseUrl" ]; then
-		/bin/sed -i "s/url: jdbc:postgresql://db.example.com/db-prod/url: $databaseUrl/g" "$REAPER_CONFIG"
+		/bin/sed -i "s|url: jdbc:postgresql://db.example.com/db-prod|url: $databaseUrl|g" "$REAPER_CONFIG"
 fi
 
 #Check that all DB settings were provided
-if [ ! -z "$databaseUser" || ! -z "$databasePassword" || ! -z "$databaseUrl" ]; then
-		if [ -z "$databaseUser" || -z "$databasePassword" || -z "$databaseUrl" ]; then
+if [ ! -z "$databaseUser" -o ! -z "$databasePassword" -o ! -z "$databaseUrl" ]; then
+		if [ -z "$databaseUser" -o -z "$databasePassword" -o -z "$databaseUrl" ]; then
         echo "Missing database settings (databaseUser:$databaseUser), (databasePassword:$databasePassword), (databaseUrl:$databaseUrl)"
         exit 1
     fi

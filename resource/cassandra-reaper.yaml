@@ -30,4 +30,5 @@ server:
 database:
   driverClass: org.postgresql.Driver
   user: pg-user
+  password: pg-pass
   url: jdbc:postgresql://db.example.com/db-prod
