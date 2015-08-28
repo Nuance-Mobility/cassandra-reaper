@@ -3,6 +3,9 @@
 # chkconfig: 345 99 01
 # description: Cassandra Reaper service script
 
+ulimit -S -n 65536
+ulimit -H -n 131072
+
 SERVICE_NAME=cassandra-reaper
 PATH_TO_JAR=/opt/cassandra-reaper/cassandra-reaper*.jar
 PATH_TO_CONF=/opt/cassandra-reaper/cassandra-reaper.yaml
