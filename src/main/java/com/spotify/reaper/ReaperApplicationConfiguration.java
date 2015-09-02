@@ -47,11 +47,16 @@ public class ReaperApplicationConfiguration extends Configuration {
 
   @JsonProperty
   @NotNull
+  @DefaultValue("7")
+  private Integer scheduleDaysBetween;
+  
   @JsonProperty
   @NotNull
   @DefaultValue("2")
   private Integer daysToExpireAfterDone;
   
+  @JsonProperty
+  @NotNull
   @DefaultValue("false")
   private Boolean incrementalRepair;
 
@@ -102,6 +107,14 @@ public class ReaperApplicationConfiguration extends Configuration {
 
   public void setRepairIntensity(double repairIntensity) {
     this.repairIntensity = repairIntensity;
+  }
+  
+  public Integer getScheduleDaysBetween() {
+    return scheduleDaysBetween;
+  }
+
+  public void setScheduleDaysBetween(int scheduleDaysBetween) {
+    this.scheduleDaysBetween = scheduleDaysBetween;
   }
   
   public Integer getDaysToExpireAfterDone() {

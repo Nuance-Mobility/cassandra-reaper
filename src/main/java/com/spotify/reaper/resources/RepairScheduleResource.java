@@ -101,7 +101,7 @@ public class RepairScheduleResource {
       if (null != possibleFailResponse) {
         return possibleFailResponse;
       }
-
+	  
       DateTime nextActivation;
       if (scheduleTriggerTime.isPresent()) {
         try {
@@ -122,11 +122,6 @@ public class RepairScheduleResource {
         return Response.status(Response.Status.BAD_REQUEST).entity(
             "given schedule_trigger_time is in the past: "
             + CommonTools.dateTimeToISO8601(nextActivation)).build();
-      }
-      
-      if(!scheduleDaysBetween.isPresent()) {
-    	  return Response.status(Response.Status.BAD_REQUEST).entity(
-              "missing required parameter: scheduleDaysBetween").build();
       }
 
       Double intensity;
@@ -150,6 +145,13 @@ public class RepairScheduleResource {
         LOG.debug("using given segment count {} instead of configured value {}",
                   segmentCount.get(), context.config.getSegmentCount());
         segments = segmentCount.get();
+      }
+      
+      int daysBetween = context.config.getScheduleDaysBetween();
+      if(scheduleDaysBetween.isPresent()) {
+    	  LOG.debug("using given schedule days between {} instead of configured value {}",
+    			  scheduleDaysBetween.get(), context.config.getScheduleDaysBetween());
+    	  daysBetween = scheduleDaysBetween.get();
       }
       
       int daysToExpire = context.config.getDaysToExpireAfterDone();
@@ -191,7 +193,7 @@ public class RepairScheduleResource {
       }
       
       RepairSchedule newRepairSchedule = CommonTools.storeNewRepairSchedule(
-          context, cluster, theRepairUnit, scheduleDaysBetween.get(), nextActivation, owner.get(),
+          context, cluster, theRepairUnit, daysBetween, nextActivation, daysToExpire, owner.get(),
           segments, parallelism, intensity);
 
       return Response.created(buildRepairScheduleURI(uriInfo, newRepairSchedule))
