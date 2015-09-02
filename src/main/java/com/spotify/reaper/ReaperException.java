@@ -15,7 +15,9 @@ package com.spotify.reaper;
 
 public class ReaperException extends Exception {
 
-  public ReaperException(String s) {
+private static final long serialVersionUID = -2999387908038781901L;
+
+public ReaperException(String s) {
     super(s);
   }
 

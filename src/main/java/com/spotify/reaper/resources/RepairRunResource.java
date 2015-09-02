@@ -399,7 +399,7 @@ public class RepairRunResource {
    */
   @GET
   public Response listRepairRuns(@QueryParam("state") Optional<String> state) {
-    Set desiredStates = splitStateParam(state);
+    Set<?> desiredStates = splitStateParam(state);
     if (desiredStates == null) {
       return Response.status(Response.Status.BAD_REQUEST).build();
     }
@@ -430,7 +430,7 @@ public class RepairRunResource {
   }
 
   @VisibleForTesting
-  public Set splitStateParam(Optional<String> state) {
+  public Set<?> splitStateParam(Optional<String> state) {
     if (state.isPresent()) {
       Iterable<String> chunks = CommonTools.COMMA_SEPARATED_LIST_SPLITTER.split(state.get());
       for (String chunk : chunks) {

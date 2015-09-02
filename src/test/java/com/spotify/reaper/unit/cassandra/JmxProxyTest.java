@@ -13,13 +13,12 @@
  */
 package com.spotify.reaper.unit.cassandra;
 
-import com.spotify.reaper.ReaperException;
-import com.spotify.reaper.cassandra.JmxConnectionFactory;
-import com.spotify.reaper.cassandra.JmxProxy;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import com.spotify.reaper.ReaperException;
+import com.spotify.reaper.cassandra.JmxProxy;
 
 public class JmxProxyTest {
 
