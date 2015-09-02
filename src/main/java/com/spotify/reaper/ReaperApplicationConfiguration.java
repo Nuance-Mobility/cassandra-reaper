@@ -47,6 +47,11 @@ public class ReaperApplicationConfiguration extends Configuration {
 
   @JsonProperty
   @NotNull
+  @JsonProperty
+  @NotNull
+  @DefaultValue("2")
+  private Integer daysToExpireAfterDone;
+  
   @DefaultValue("false")
   private Boolean incrementalRepair;
 
@@ -98,6 +103,14 @@ public class ReaperApplicationConfiguration extends Configuration {
   public void setRepairIntensity(double repairIntensity) {
     this.repairIntensity = repairIntensity;
   }
+  
+  public Integer getDaysToExpireAfterDone() {
+	return daysToExpireAfterDone;
+  }
+
+  public void setDaysToExpireAfterDone(int daysToExpireAfterDone) {
+    this.daysToExpireAfterDone = daysToExpireAfterDone;
+  }  
   
   public Boolean getIncrementalRepair() {
 	    return incrementalRepair;

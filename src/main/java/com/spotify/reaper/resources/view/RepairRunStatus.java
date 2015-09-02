@@ -65,6 +65,9 @@ public class RepairRunStatus {
   @JsonIgnore
   private DateTime pauseTime;
 
+  @JsonProperty("days_to_expire_after_done")
+  private Integer daysToExpireAfterDone;
+  
   @JsonProperty
   private double intensity;
 
@@ -98,7 +101,7 @@ public class RepairRunStatus {
   public RepairRunStatus(long runId, String clusterName, String keyspaceName,
       Collection<String> columnFamilies, int segmentsRepaired, int totalSegments,
       RepairRun.RunState state, DateTime startTime, DateTime endTime, String cause, String owner,
-      String lastEvent, DateTime creationTime, DateTime pauseTime, double intensity, boolean incrementalRepair,
+      String lastEvent, DateTime creationTime, DateTime pauseTime, Integer daysToExpireAfterDone, double intensity, boolean incrementalRepair,
       RepairParallelism repairParallelism) {
     this.id = runId;
     this.cause = cause;
@@ -111,6 +114,7 @@ public class RepairRunStatus {
     this.startTime = startTime;
     this.endTime = endTime;
     this.pauseTime = pauseTime;
+    this.daysToExpireAfterDone = daysToExpireAfterDone;
     this.intensity = CommonTools.roundDoubleNicely(intensity);
     this.incrementalRepair = incrementalRepair;
     this.totalSegments = totalSegments;
@@ -161,6 +165,7 @@ public class RepairRunStatus {
         repairRun.getLastEvent(),
         repairRun.getCreationTime(),
         repairRun.getPauseTime(),
+        repairRun.getDaysToExpireAfterDone(),
         repairRun.getIntensity(),
         repairUnit.getIncrementalRepair(),
         repairRun.getRepairParallelism()
@@ -214,7 +219,7 @@ public class RepairRunStatus {
       pauseTime = ISODateTimeFormat.dateTimeNoMillis().parseDateTime(dateStr);
     }
   }
-
+  
   public String getCause() {
     return cause;
   }
@@ -302,7 +307,15 @@ public class RepairRunStatus {
   public void setPauseTime(DateTime pauseTime) {
     this.pauseTime = pauseTime;
   }
+  
+  public Integer getDaysToExpireAfterDone() {
+	return daysToExpireAfterDone;
+  }
 
+  public void setDaysToExpireAfterDone(Integer daysToExpireAfterDone) {
+	this.daysToExpireAfterDone = daysToExpireAfterDone;  
+  }
+  
   public double getIntensity() {
     return intensity;
   }
