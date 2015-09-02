@@ -1,11 +1,6 @@
 package com.spotify.reaper.resources.view;
 
-import com.google.common.collect.Lists;
-
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.spotify.reaper.SimpleReaperClient;
-import com.spotify.reaper.core.RepairSchedule;
+import static org.junit.Assert.assertEquals;
 
 import org.apache.cassandra.repair.RepairParallelism;
 import org.joda.time.DateTime;
@@ -13,7 +8,10 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static org.junit.Assert.assertEquals;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.Lists;
+import com.spotify.reaper.SimpleReaperClient;
+import com.spotify.reaper.core.RepairSchedule;
 
 public class RepairScheduleStatusTest {
 

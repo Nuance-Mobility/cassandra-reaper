@@ -1,22 +1,10 @@
 package com.spotify.reaper.acceptance;
 
-import com.google.common.base.Optional;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
-
-import com.spotify.reaper.AppContext;
-import com.spotify.reaper.ReaperException;
-import com.spotify.reaper.SimpleReaperClient;
-import com.spotify.reaper.cassandra.JmxConnectionFactory;
-import com.spotify.reaper.cassandra.JmxProxy;
-import com.spotify.reaper.resources.CommonTools;
-import com.spotify.reaper.resources.view.RepairRunStatus;
-import com.spotify.reaper.resources.view.RepairScheduleStatus;
-import com.sun.jersey.api.client.ClientResponse;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -25,18 +13,27 @@ import java.util.Set;
 
 import javax.ws.rs.core.Response;
 
-import cucumber.api.PendingException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.google.common.base.Optional;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
+import com.spotify.reaper.AppContext;
+import com.spotify.reaper.SimpleReaperClient;
+import com.spotify.reaper.cassandra.JmxConnectionFactory;
+import com.spotify.reaper.cassandra.JmxProxy;
+import com.spotify.reaper.resources.CommonTools;
+import com.spotify.reaper.resources.view.RepairRunStatus;
+import com.spotify.reaper.resources.view.RepairScheduleStatus;
+import com.sun.jersey.api.client.ClientResponse;
+
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 /**
  * Basic acceptance test (Cucumber) steps.
