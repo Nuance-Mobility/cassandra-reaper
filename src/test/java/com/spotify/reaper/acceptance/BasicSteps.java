@@ -21,6 +21,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.spotify.reaper.AppContext;
+import com.spotify.reaper.ReaperException;
 import com.spotify.reaper.SimpleReaperClient;
 import com.spotify.reaper.cassandra.JmxConnectionFactory;
 import com.spotify.reaper.cassandra.JmxProxy;
