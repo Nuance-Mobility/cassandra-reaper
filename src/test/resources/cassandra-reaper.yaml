@@ -17,6 +17,9 @@ hangingRepairTimeoutMins: 30
 incrementalRepair: false
 
 scheduleDaysBetween: 7
+
+daysToExpireAfterDone: 2
+
 # storageType is either "database" or "memory"
 storageType: memory
 
