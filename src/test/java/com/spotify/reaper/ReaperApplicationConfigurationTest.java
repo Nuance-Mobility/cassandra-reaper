@@ -1,5 +1,6 @@
 package com.spotify.reaper;
 
+import io.dropwizard.db.DataSourceFactory;
 import org.apache.cassandra.repair.RepairParallelism;
 import org.hibernate.validator.HibernateValidator;
 import org.junit.Before;
@@ -7,8 +8,6 @@ import org.junit.Test;
 
 import javax.validation.Validation;
 import javax.validation.Validator;
-
-import io.dropwizard.db.DataSourceFactory;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 
@@ -37,11 +36,8 @@ public class ReaperApplicationConfigurationTest {
     config.setScheduleDaysBetween(7);
     config.setStorageType("foo");
     config.setIncrementalRepair(false);
-<<<<<<< HEAD
     config.setScheduleDaysBetween(1);
     config.setDaysToExpireAfterDone(2);
-=======
->>>>>>> 42526c03a3532528878d1666bc8c5598929af140
   }
 
   @Test
