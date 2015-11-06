@@ -165,6 +165,7 @@ public class RepairRun implements Comparable<RepairRun> {
     private RunState runState;
     private DateTime creationTime;
     private double intensity;
+    private boolean incrementalRepair;
     private String cause;
     private String owner;
     private DateTime startTime;

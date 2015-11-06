@@ -37,8 +37,11 @@ public class ReaperApplicationConfigurationTest {
     config.setScheduleDaysBetween(7);
     config.setStorageType("foo");
     config.setIncrementalRepair(false);
+<<<<<<< HEAD
     config.setScheduleDaysBetween(1);
     config.setDaysToExpireAfterDone(2);
+=======
+>>>>>>> 42526c03a3532528878d1666bc8c5598929af140
   }
 
   @Test

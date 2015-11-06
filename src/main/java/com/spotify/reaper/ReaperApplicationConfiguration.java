@@ -26,6 +26,7 @@ import javax.validation.constraints.NotNull;
 import javax.ws.rs.DefaultValue;
 import java.util.Map;
 
+
 public class ReaperApplicationConfiguration extends Configuration {
 
   @JsonProperty
@@ -105,7 +106,7 @@ public class ReaperApplicationConfiguration extends Configuration {
   public void setRepairIntensity(double repairIntensity) {
     this.repairIntensity = repairIntensity;
   }
-  
+
   public Integer getScheduleDaysBetween() {
     return scheduleDaysBetween;
   }
@@ -122,6 +123,7 @@ public class ReaperApplicationConfiguration extends Configuration {
     this.daysToExpireAfterDone = daysToExpireAfterDone;
   }  
   
+
   public Boolean getIncrementalRepair() {
 	    return incrementalRepair;
   }

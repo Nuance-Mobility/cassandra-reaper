@@ -123,6 +123,11 @@ public class RepairScheduleResource {
             "given schedule_trigger_time is in the past: "
             + CommonTools.dateTimeToISO8601(nextActivation)).build();
       }
+      
+      if(!scheduleDaysBetween.isPresent()) {
+    	  return Response.status(Response.Status.BAD_REQUEST).entity(
+              "missing required parameter: scheduleDaysBetween").build();
+      }
 
       Double intensity;
       if (intensityStr.isPresent()) {

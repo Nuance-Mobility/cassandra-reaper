@@ -132,7 +132,10 @@ public class RepairRunResourceTest {
                                  segments == null ? Optional.<Integer>absent()
                                                   : Optional.of(segments),
                                  Optional.of(REPAIR_PARALLELISM.name()),
+<<<<<<< HEAD
                                  Optional.<Integer>absent(),
+=======
+>>>>>>> 42526c03a3532528878d1666bc8c5598929af140
                                  Optional.<String>absent(),
                                  Optional.<String>absent());
   }

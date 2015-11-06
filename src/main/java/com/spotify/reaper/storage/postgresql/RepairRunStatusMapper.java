@@ -42,5 +42,6 @@ public class RepairRunStatusMapper implements ResultSetMapper<RepairRunStatus> {
     return new RepairRunStatus(runId, clusterName, keyspaceName, columnFamilies, segmentsRepaired,
         totalSegments, state, startTime, endTime, cause, owner, lastEvent,
         creationTime, pauseTime, daysToExpireAfterDone, intensity, incrementalRepair, repairParallelism);
+
   }
 }
