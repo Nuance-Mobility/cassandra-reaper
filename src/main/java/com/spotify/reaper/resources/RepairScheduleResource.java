@@ -84,22 +84,24 @@ public class RepairScheduleResource {
       @QueryParam("owner") Optional<String> owner,
       @QueryParam("segmentCount") Optional<Integer> segmentCount,
       @QueryParam("repairParallelism") Optional<String> repairParallelism,
+      @QueryParam("daysToExpireAfterDone") Optional<Integer> daysToExpireAfterDone,
       @QueryParam("intensity") Optional<String> intensityStr,
+      @QueryParam("incrementalRepair") Optional<String> incrementalRepairStr,
       @QueryParam("scheduleDaysBetween") Optional<Integer> scheduleDaysBetween,
       @QueryParam("scheduleTriggerTime") Optional<String> scheduleTriggerTime
   ) {
     LOG.info("add repair schedule called with: clusterName = {}, keyspace = {}, tables = {}, "
-             + "owner = {}, segmentCount = {}, repairParallelism = {}, "
-             + "intensity = {}, scheduleDaysBetween = {}, scheduleTriggerTime = {}",
-        clusterName, keyspace, tableNamesParam, owner, segmentCount, repairParallelism,
-        intensityStr, scheduleDaysBetween, scheduleTriggerTime);
+             + "owner = {}, segmentCount = {}, repairParallelism = {}, daysToExpireAfter = {}, "
+             + "intensity = {}, incrementalRepair = {}, scheduleDaysBetween = {}, scheduleTriggerTime = {}",
+             clusterName, keyspace, tableNamesParam, owner, segmentCount, repairParallelism, daysToExpireAfterDone,
+             intensityStr, incrementalRepairStr, scheduleDaysBetween, scheduleTriggerTime);
     try {
       Response possibleFailResponse = RepairRunResource.checkRequestForAddRepair(
-          context, clusterName, keyspace, owner, segmentCount, repairParallelism, intensityStr);
+          context, clusterName, keyspace, owner, segmentCount, repairParallelism, intensityStr, incrementalRepairStr);
       if (null != possibleFailResponse) {
         return possibleFailResponse;
       }
-
+	  
       DateTime nextActivation;
       if (scheduleTriggerTime.isPresent()) {
         try {
@@ -129,6 +131,14 @@ public class RepairScheduleResource {
         intensity = context.config.getRepairIntensity();
         LOG.debug("no intensity given, so using default value: " + intensity);
       }
+      
+      Boolean incrementalRepair;
+      if (incrementalRepairStr.isPresent()) {
+    	  incrementalRepair = Boolean.parseBoolean(incrementalRepairStr.get());
+      } else {
+    	  incrementalRepair = context.config.getIncrementalRepair();
+        LOG.debug("no incremental repair given, so using default value: " + incrementalRepair);
+      }
 
       int segments = context.config.getSegmentCount();
       if (segmentCount.isPresent()) {
@@ -136,12 +146,19 @@ public class RepairScheduleResource {
             segmentCount.get(), context.config.getSegmentCount());
         segments = segmentCount.get();
       }
-
+      
       int daysBetween = context.config.getScheduleDaysBetween();
-      if (scheduleDaysBetween.isPresent()) {
-        LOG.debug("using given schedule days between {} instead of configured value {}",
-            scheduleDaysBetween.get(), context.config.getScheduleDaysBetween());
-        daysBetween = scheduleDaysBetween.get();
+      if(scheduleDaysBetween.isPresent()) {
+    	  LOG.debug("using given schedule days between {} instead of configured value {}",
+    			  scheduleDaysBetween.get(), context.config.getScheduleDaysBetween());
+    	  daysBetween = scheduleDaysBetween.get();
+      }
+      
+      int daysToExpire = context.config.getDaysToExpireAfterDone();
+      if(daysToExpireAfterDone.isPresent()) {
+    	  LOG.debug("using given days to expire after {} instead of configured value {}",
+    			  daysToExpireAfterDone.get(), context.config.getDaysToExpireAfterDone());
+    	  daysToExpire = daysToExpireAfterDone.get();
       }
 
       Cluster cluster = context.storage.getCluster(Cluster.toSymbolicName(clusterName.get())).get();
@@ -154,8 +171,14 @@ public class RepairScheduleResource {
       }
 
       RepairUnit theRepairUnit =
-          CommonTools.getNewOrExistingRepairUnit(context, cluster, keyspace.get(), tableNames);
+          CommonTools.getNewOrExistingRepairUnit(context, cluster, keyspace.get(), tableNames, incrementalRepair);
 
+      if(theRepairUnit.getIncrementalRepair() != incrementalRepair) {
+    	  return Response.status(Response.Status.BAD_REQUEST).entity(
+                  "A repair Schedule already exist for the same cluster/keyspace/table but with a different incremental repair value." 
+                  + "Requested value: " + incrementalRepair + " | Existing value: " + theRepairUnit.getIncrementalRepair()).build();
+      }
+      
       RepairParallelism parallelism = context.config.getRepairParallelism();
       if (repairParallelism.isPresent()) {
         LOG.debug("using given repair parallelism {} instead of configured value {}",
@@ -163,8 +186,14 @@ public class RepairScheduleResource {
         parallelism = RepairParallelism.valueOf(repairParallelism.get().toUpperCase());
       }
 
+      if(!parallelism.equals(RepairParallelism.PARALLEL) && incrementalRepair) {
+          return Response.status(Response.Status.BAD_REQUEST).entity(
+                  "It is not possible to mix sequential repair and incremental repairs. parallelism " 
+                  + parallelism + " : incrementalRepair " + incrementalRepair).build();
+      }
+      
       RepairSchedule newRepairSchedule = CommonTools.storeNewRepairSchedule(
-          context, cluster, theRepairUnit, daysBetween, nextActivation, owner.get(),
+          context, cluster, theRepairUnit, daysBetween, nextActivation, daysToExpire, owner.get(),
           segments, parallelism, intensity);
 
       return Response.created(buildRepairScheduleURI(uriInfo, newRepairSchedule))
@@ -277,7 +306,7 @@ public class RepairScheduleResource {
   }
 
   /**
-   * @param clusterName The cluster_name for which the repair schedule belongs to.
+   * @param clusterName     The cluster_name for which the Repair Schedule belongs
    * @return all know repair schedules for a cluster.
    */
   @GET
@@ -334,6 +363,7 @@ public class RepairScheduleResource {
       @QueryParam("keyspace") Optional<String> keyspaceName) {
     List<RepairScheduleStatus> scheduleStatuses = Lists.newArrayList();
     Collection<RepairSchedule> schedules = getScheduleList(clusterName, keyspaceName);
+
     for (RepairSchedule schedule : schedules) {
       Optional<RepairUnit> unit = context.storage.getRepairUnit(schedule.getRepairUnitId());
       if (unit.isPresent()) {
@@ -347,6 +377,7 @@ public class RepairScheduleResource {
     }
     return Response.status(Response.Status.OK).entity(scheduleStatuses).build();
   }
+
 
   private Collection<RepairSchedule> getScheduleList(Optional<String> clusterName,
       Optional<String> keyspaceName) {
@@ -363,6 +394,7 @@ public class RepairScheduleResource {
     }
     return schedules;
   }
+
 
   /**
    * Delete a RepairSchedule object with given id.

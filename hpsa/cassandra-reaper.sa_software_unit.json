@@ -1,0 +1,26 @@
+{
+    "path":"/Nuance/Shared/Software Policies/Cassandra Reaper/Packages",
+    "name":"cassandra-reaper-<release.number>.<build.number>",
+    "fileName":"cassandra-reaper-<release.number>.<build.number>.zip",
+    "description":"Cassandra Reaper",
+    "unitType":"ZIP",
+    "upgradable":true,
+    "installPath":"/opt/cassandra-reaper",
+    "installInfo.postInstallScript.localpath":"cassandra-reaper.postInstallScript.sh",
+    "installInfo.preUninstallScript.localpath":"cassandra-reaper.preUninstallScript.sh",
+    "platforms": [
+        {
+            "platforms.name": "Red Hat Enterprise Linux Workstation 6 X86_64"
+        },
+        {
+            "platforms.name": "Red Hat Enterprise Linux Server 6 X86_64"
+        },
+        {
+            "platforms.name": "Oracle Linux 6 X86_64"
+        },
+        {
+            "platforms.name": "CentOS 6 X86_64"
+        }
+    ]
+    
+}

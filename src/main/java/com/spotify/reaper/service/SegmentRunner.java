@@ -24,6 +24,7 @@ import com.spotify.reaper.cassandra.JmxProxy;
 import com.spotify.reaper.cassandra.RepairStatusHandler;
 import com.spotify.reaper.core.RepairSegment;
 import com.spotify.reaper.core.RepairUnit;
+import com.spotify.reaper.utils.SimpleCondition;
 import com.sun.management.UnixOperatingSystemMXBean;
 
 import org.apache.cassandra.repair.RepairParallelism;
@@ -151,6 +152,7 @@ public final class SegmentRunner implements RepairStatusHandler, Runnable {
 
       RepairUnit repairUnit = context.storage.getRepairUnit(segment.getRepairUnitId()).get();
       String keyspace = repairUnit.getKeyspaceName();
+      boolean fullRepair = !repairUnit.getIncrementalRepair();
 
       if (!canRepair(segment, keyspace, coordinator)) {
         postponeCurrentSegment();
@@ -160,7 +162,7 @@ public final class SegmentRunner implements RepairStatusHandler, Runnable {
       LOG.debug("Enter synchronized section with segment ID {}", segmentId);
       synchronized (condition) {
         commandId = coordinator.triggerRepair(segment.getStartToken(), segment.getEndToken(),
-            keyspace, validationParallelism, repairUnit.getColumnFamilies());
+            keyspace, validationParallelism, repairUnit.getColumnFamilies(), fullRepair);
 
         if (commandId == 0) {
           // From cassandra source in "forceRepairAsync":

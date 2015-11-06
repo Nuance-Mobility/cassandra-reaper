@@ -354,6 +354,30 @@ public class MemoryStorage implements IStorage {
     }
     return foundRepairSchedules;
   }
+  
+  @Override
+  public Collection<RepairSchedule> getRepairSchedulesForKeyspace(String keyspaceName) {
+    Collection<RepairSchedule> foundRepairSchedules = new ArrayList<>();
+    for (RepairSchedule repairSchedule : repairSchedules.values()) {
+      RepairUnit repairUnit = getRepairUnit(repairSchedule.getRepairUnitId()).get();
+      if (repairUnit.getKeyspaceName().equals(keyspaceName)) {
+        foundRepairSchedules.add(repairSchedule);
+      }
+    }
+    return foundRepairSchedules;
+  }
+  
+  @Override
+  public Collection<RepairSchedule> getRepairSchedulesForClusterAndKeyspace(String clusterName, String keyspaceName) {
+    Collection<RepairSchedule> foundRepairSchedules = new ArrayList<>();
+    for (RepairSchedule repairSchedule : repairSchedules.values()) {
+      RepairUnit repairUnit = getRepairUnit(repairSchedule.getRepairUnitId()).get();
+      if (repairUnit.getClusterName().equals(clusterName) && repairUnit.getKeyspaceName().equals(keyspaceName)) {
+        foundRepairSchedules.add(repairSchedule);
+      }
+    }
+    return foundRepairSchedules;
+  }
 
   @Override
   public Collection<RepairSchedule> getRepairSchedulesForKeyspace(String keyspaceName) {
@@ -423,7 +447,7 @@ public class MemoryStorage implements IStorage {
             run.getId(), clusterName, unit.getKeyspaceName(), unit.getColumnFamilies(),
             segmentsRepaired, totalSegments, run.getRunState(), run.getStartTime(),
             run.getEndTime(), run.getCause(), run.getOwner(), run.getLastEvent(),
-            run.getCreationTime(), run.getPauseTime(), run.getIntensity(),
+            run.getCreationTime(), run.getPauseTime(), run.getDaysToExpireAfterDone(), run.getIntensity(), unit.getIncrementalRepair(),
             run.getRepairParallelism()));
       }
       return runStatuses;

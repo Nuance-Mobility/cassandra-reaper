@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Cassandra Reaper Configuration Example.
 # See a bit more complete example in:
 # src/test/resources/cassandra-reaper.yaml
@@ -5,12 +6,21 @@
 segmentCount: 200
 repairParallelism: DATACENTER_AWARE
 repairIntensity: 0.9
+=======
+segmentCount: 200
+repairParallelism: PARALLEL
+repairIntensity: 0.1
+>>>>>>> 0d9358eb266e778fce8b0d5cb25b40a57b6820a8
 scheduleDaysBetween: 7
 daysToExpireAfterDone: 2
 repairRunThreadCount: 15
 hangingRepairTimeoutMins: 30
 storageType: memory
 enableCrossOrigin: true
+<<<<<<< HEAD
+=======
+incrementalRepair: true
+>>>>>>> 0d9358eb266e778fce8b0d5cb25b40a57b6820a8
 
 logging:
   level: INFO
@@ -19,7 +29,11 @@ logging:
     org.eclipse.jetty: INFO
   appenders:
     - type: console
+<<<<<<< HEAD
       logFormat: "%-6level [%d] [%t] %logger{5} - %msg %n"
+=======
+      logFormat: "%-6level [%d{HH:mm:ss.SSS}] [%t] %logger{5} - %msg %n"
+>>>>>>> 0d9358eb266e778fce8b0d5cb25b40a57b6820a8
 
 server:
   type: default
@@ -31,7 +45,11 @@ server:
     - type: http
       port: 8081
       bindHost: 0.0.0.0
+<<<<<<< HEAD
 
+=======
+      
+>>>>>>> 0d9358eb266e778fce8b0d5cb25b40a57b6820a8
 database:
   driverClass: org.postgresql.Driver
   user: pg-user

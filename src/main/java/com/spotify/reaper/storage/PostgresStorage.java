@@ -418,7 +418,7 @@ public class PostgresStorage implements IStorage {
     }
     return result;
   }
-
+  
   @Override
   public Collection<RepairSchedule> getRepairSchedulesForKeyspace(String keyspaceName) {
     Collection<RepairSchedule> result;
