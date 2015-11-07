@@ -25,6 +25,8 @@ import org.joda.time.DateTimeUtils;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 import java.math.BigInteger;
 import java.net.URI;
 import java.util.Collections;
@@ -32,16 +34,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyCollectionOf;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.anyBoolean;
+import static org.junit.Assert.*;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -132,6 +126,7 @@ public class RepairRunResourceTest {
                                  segments == null ? Optional.<Integer>absent()
                                                   : Optional.of(segments),
                                  Optional.of(REPAIR_PARALLELISM.name()),
+                                 Optional.<Integer>absent(),
                                  Optional.<String>absent(),
                                  Optional.<String>absent());
   }

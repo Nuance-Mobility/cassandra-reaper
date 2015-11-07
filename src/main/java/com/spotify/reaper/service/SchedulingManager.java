@@ -30,7 +30,7 @@ public class SchedulingManager extends TimerTask {
       LOG.info("Starting new SchedulingManager instance");
       schedulingManager = new SchedulingManager(context);
       Timer timer = new Timer("SchedulingManagerTimer");
-      timer.schedule(schedulingManager, 1000, 1000 * 60); // activate once per minute
+      timer.schedule(schedulingManager, 1000, 1000 * 60 * 10); // activate once per ten minutes
     } else {
       LOG.warn("there is already one instance of SchedulingManager running, not starting new one");
     }
@@ -169,7 +169,7 @@ public class SchedulingManager extends TimerTask {
     Cluster cluster = context.storage.getCluster(repairUnit.getClusterName()).get();
     RepairRun newRepairRun = CommonTools.registerRepairRun(
         context, cluster, repairUnit, Optional.of("scheduled run"),
-        schedule.getOwner(), schedule.getSegmentCount(), schedule.getRepairParallelism(),
+        schedule.getOwner(), schedule.getSegmentCount(), schedule.getDaysToExpireAfterDone(), schedule.getRepairParallelism(),
         schedule.getIntensity());
     context.repairManager.startRepairRun(context, newRepairRun);
     return newRepairRun;

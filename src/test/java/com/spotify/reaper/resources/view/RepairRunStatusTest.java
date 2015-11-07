@@ -1,14 +1,10 @@
 package com.spotify.reaper.resources.view;
 
-import com.google.common.collect.Lists;
-
-import com.spotify.reaper.resources.CommonTools;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import java.util.Collection;
-
-import static org.junit.Assert.*;
+import com.spotify.reaper.resources.CommonTools;
 
 public class RepairRunStatusTest {
 

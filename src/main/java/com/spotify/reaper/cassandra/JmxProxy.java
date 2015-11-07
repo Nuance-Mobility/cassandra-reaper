@@ -77,6 +77,8 @@ public class JmxProxy implements NotificationListener, AutoCloseable {
   private final JMXServiceURL jmxUrl;
   private final String clusterName;
 
+  private static final boolean FULL_REPAIR = true;
+
   private JmxProxy(Optional<RepairStatusHandler> handler, String host, JMXServiceURL jmxUrl,
       JMXConnector jmxConnector, StorageServiceMBean ssProxy, ObjectName ssMbeanName,
       MBeanServerConnection mbeanServer, CompactionManagerMBean cmProxy) {

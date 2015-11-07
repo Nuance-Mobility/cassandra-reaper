@@ -1,5 +1,15 @@
 package com.spotify.reaper.service;
 
+import java.util.Collection;
+import java.util.Map;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
+import org.apache.cassandra.concurrent.NamedThreadFactory;
+import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.Maps;
 import com.google.common.util.concurrent.ListenableFuture;
@@ -12,15 +22,6 @@ import com.spotify.reaper.cassandra.JmxProxy;
 import com.spotify.reaper.core.RepairRun;
 import com.spotify.reaper.core.RepairSegment;
 
-import org.apache.cassandra.concurrent.NamedThreadFactory;
-import org.joda.time.DateTime;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.Collection;
-import java.util.Map;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 public class RepairManager {
 

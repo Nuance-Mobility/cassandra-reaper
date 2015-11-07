@@ -1,11 +1,36 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
+# Cassandra Reaper Configuration Example.
+# See a bit more complete example in:
+# src/test/resources/cassandra-reaper.yaml
+
 segmentCount: 200
 repairParallelism: DATACENTER_AWARE
 repairIntensity: 0.9
+=======
+segmentCount: 200
+repairParallelism: PARALLEL
+repairIntensity: 0.1
+>>>>>>> 0d9358eb266e778fce8b0d5cb25b40a57b6820a8
+scheduleDaysBetween: 7
+daysToExpireAfterDone: 2
+=======
+segmentCount: 200
+repairParallelism: DATACENTER_AWARE
+repairIntensity: 0.9
+>>>>>>> 42526c03a3532528878d1666bc8c5598929af140
 repairRunThreadCount: 15
 hangingRepairTimeoutMins: 30
 storageType: memory
 enableCrossOrigin: true
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+incrementalRepair: true
+>>>>>>> 0d9358eb266e778fce8b0d5cb25b40a57b6820a8
+=======
 incrementalRepair: false
+>>>>>>> 42526c03a3532528878d1666bc8c5598929af140
 
 logging:
   level: INFO
@@ -14,7 +39,15 @@ logging:
     org.eclipse.jetty: INFO
   appenders:
     - type: console
+<<<<<<< HEAD
+<<<<<<< HEAD
+      logFormat: "%-6level [%d] [%t] %logger{5} - %msg %n"
+=======
       logFormat: "%-6level [%d{HH:mm:ss.SSS}] [%t] %logger{5} - %msg %n"
+>>>>>>> 0d9358eb266e778fce8b0d5cb25b40a57b6820a8
+=======
+      logFormat: "%-6level [%d{HH:mm:ss.SSS}] [%t] %logger{5} - %msg %n"
+>>>>>>> 42526c03a3532528878d1666bc8c5598929af140
 
 server:
   type: default
@@ -26,8 +59,21 @@ server:
     - type: http
       port: 8081
       bindHost: 0.0.0.0
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+=======
+      
+>>>>>>> 0d9358eb266e778fce8b0d5cb25b40a57b6820a8
+database:
+  driverClass: org.postgresql.Driver
+  user: pg-user
+  password: pg-pass
+  url: jdbc:postgresql://db.example.com/db-prod
+=======
       
 database:
   driverClass: org.postgresql.Driver
   user: pg-user
   url: jdbc:postgresql://db.example.com/db-prod
+>>>>>>> 42526c03a3532528878d1666bc8c5598929af140

@@ -15,6 +15,13 @@ repairRunThreadCount: 15
 hangingRepairTimeoutMins: 30
 
 incrementalRepair: false
+<<<<<<< HEAD
+# You can also use value 0 for scheduleDaysBetween, for continuous repairs.
+scheduleDaysBetween: 7
+
+daysToExpireAfterDone: 2
+=======
+>>>>>>> 42526c03a3532528878d1666bc8c5598929af140
 
 # storageType is either "database" or "memory"
 storageType: memory

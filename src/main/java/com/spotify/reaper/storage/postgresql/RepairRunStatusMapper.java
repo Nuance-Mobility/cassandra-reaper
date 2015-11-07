@@ -33,6 +33,7 @@ public class RepairRunStatusMapper implements ResultSetMapper<RepairRunStatus> {
     String lastEvent = r.getString("last_event");
     DateTime creationTime = RepairRunMapper.getDateTimeOrNull(r, "creation_time");
     DateTime pauseTime = RepairRunMapper.getDateTimeOrNull(r, "pause_time");
+    Integer daysToExpireAfterDone = r.getInt("days_to_expire_after_done");
     Double intensity = r.getDouble("intensity");
     Boolean incrementalRepair = r.getBoolean("incremental_repair");
     RepairParallelism repairParallelism =
@@ -40,6 +41,7 @@ public class RepairRunStatusMapper implements ResultSetMapper<RepairRunStatus> {
 
     return new RepairRunStatus(runId, clusterName, keyspaceName, columnFamilies, segmentsRepaired,
         totalSegments, state, startTime, endTime, cause, owner, lastEvent,
-        creationTime, pauseTime, intensity, incrementalRepair, repairParallelism);
+        creationTime, pauseTime, daysToExpireAfterDone, intensity, incrementalRepair, repairParallelism);
+
   }
 }

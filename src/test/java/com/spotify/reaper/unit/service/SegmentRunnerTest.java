@@ -70,7 +70,7 @@ public class SegmentRunnerTest {
     RepairUnit cf = context.storage.addRepairUnit(
         new RepairUnit.Builder("reaper", "reaper", Sets.newHashSet("reaper"), false));
     RepairRun run = context.storage.addRepairRun(
-        new RepairRun.Builder("reaper", cf.getId(), DateTime.now(), 0.5, 1,
+        new RepairRun.Builder("reaper", cf.getId(), DateTime.now(), 2, 0.5, 1,
             RepairParallelism.PARALLEL));
     context.storage.addRepairSegments(Collections.singleton(
         new RepairSegment.Builder(run.getId(), new RingRange(BigInteger.ONE, BigInteger.ZERO),
@@ -131,7 +131,7 @@ public class SegmentRunnerTest {
     RepairUnit cf = storage.addRepairUnit(
         new RepairUnit.Builder("reaper", "reaper", Sets.newHashSet("reaper"), false));
     RepairRun run = storage.addRepairRun(
-        new RepairRun.Builder("reaper", cf.getId(), DateTime.now(), 0.5, 1,
+        new RepairRun.Builder("reaper", cf.getId(), DateTime.now(), 2, 0.5, 1,
                               RepairParallelism.PARALLEL));
     storage.addRepairSegments(Collections.singleton(
         new RepairSegment.Builder(run.getId(), new RingRange(BigInteger.ONE, BigInteger.ZERO),
@@ -205,7 +205,7 @@ public class SegmentRunnerTest {
         storage.addRepairUnit(
             new RepairUnit.Builder("reaper", "reaper", Sets.newHashSet("reaper"), false));
     RepairRun run = storage.addRepairRun(
-        new RepairRun.Builder("reaper", cf.getId(), DateTime.now(), 0.5, 1,
+        new RepairRun.Builder("reaper", cf.getId(), DateTime.now(), 2, 0.5, 1,
                               RepairParallelism.PARALLEL));
     storage.addRepairSegments(Collections.singleton(
         new RepairSegment.Builder(run.getId(), new RingRange(BigInteger.ONE, BigInteger.ZERO),

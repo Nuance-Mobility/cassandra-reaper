@@ -14,20 +14,18 @@
 package com.spotify.reaper;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
+import io.dropwizard.Configuration;
+import io.dropwizard.db.DataSourceFactory;
 import org.apache.cassandra.repair.RepairParallelism;
 import org.hibernate.validator.constraints.NotEmpty;
-
-import java.util.Map;
 
 import javax.validation.Valid;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.DefaultValue;
+import java.util.Map;
 
-import io.dropwizard.Configuration;
-import io.dropwizard.db.DataSourceFactory;
 
 public class ReaperApplicationConfiguration extends Configuration {
 
@@ -41,10 +39,20 @@ public class ReaperApplicationConfiguration extends Configuration {
 
   @JsonProperty
   @NotNull
-  @DecimalMin(value = "0", inclusive=false)
+  @DecimalMin(value = "0", inclusive = false)
   @Max(1)
   private Double repairIntensity;
 
+  @JsonProperty
+  @NotNull
+  @DefaultValue("7")
+  private Integer scheduleDaysBetween;
+
+  @JsonProperty
+  @NotNull
+  @DefaultValue("2")
+  private Integer daysToExpireAfterDone;
+  
   @JsonProperty
   @NotNull
   @DefaultValue("false")
@@ -98,7 +106,24 @@ public class ReaperApplicationConfiguration extends Configuration {
   public void setRepairIntensity(double repairIntensity) {
     this.repairIntensity = repairIntensity;
   }
+
+  public Integer getScheduleDaysBetween() {
+    return scheduleDaysBetween;
+  }
+
+  public void setScheduleDaysBetween(int scheduleDaysBetween) {
+    this.scheduleDaysBetween = scheduleDaysBetween;
+  }
   
+  public Integer getDaysToExpireAfterDone() {
+	return daysToExpireAfterDone;
+  }
+
+  public void setDaysToExpireAfterDone(int daysToExpireAfterDone) {
+    this.daysToExpireAfterDone = daysToExpireAfterDone;
+  }  
+  
+
   public Boolean getIncrementalRepair() {
 	    return incrementalRepair;
   }
@@ -178,6 +203,7 @@ public class ReaperApplicationConfiguration extends Configuration {
     public String getUsername() {
       return username;
     }
+
     public String getPassword() {
       return password;
     }
